@@ -11,6 +11,7 @@ const updater = new Updater({
     autoDownload: true,
     allowPrerelease: false,
     channel: "latest",
+    debug: true,
 });
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -33,24 +34,24 @@ const createWindow = (): void => {
     // --- Updater event forwarding ---
     const sendUpdateState = (state: any) => {
         if (mainWindow && mainWindow.webContents) {
-            mainWindow.webContents.send('update-state', state);
+            mainWindow.webContents.send("update-state", state);
         }
     };
 
-    updater.on('update-available', (info) => {
-        sendUpdateState({ type: 'update-available', info });
+    updater.on("update-available", (info) => {
+        sendUpdateState({ type: "update-available", info });
     });
-    updater.on('update-not-available', () => {
-        sendUpdateState({ type: 'update-not-available' });
+    updater.on("update-not-available", () => {
+        sendUpdateState({ type: "update-not-available" });
     });
-    updater.on('download-progress', (progress) => {
-        sendUpdateState({ type: 'download-progress', progress });
+    updater.on("download-progress", (progress) => {
+        sendUpdateState({ type: "download-progress", progress });
     });
-    updater.on('downloaded', (filePath) => {
-        sendUpdateState({ type: 'downloaded', filePath });
+    updater.on("downloaded", (filePath) => {
+        sendUpdateState({ type: "downloaded", filePath });
     });
-    updater.on('error', (err) => {
-        sendUpdateState({ type: 'error', error: err.message || String(err) });
+    updater.on("error", (err) => {
+        sendUpdateState({ type: "error", error: err.message || String(err) });
     });
 };
 
@@ -61,12 +62,12 @@ import { ipcMain } from "electron";
 app.on("ready", () => {
     createWindow();
     // Listen for manual update check from renderer
-    ipcMain.on('check-for-updates', async (event) => {
+    ipcMain.on("check-for-updates", async (event) => {
         try {
             await updater.checkForUpdates();
         } catch (err) {
             if (mainWindow && mainWindow.webContents) {
-                mainWindow.webContents.send('update-state', { type: 'error', error: err.message || String(err) });
+                mainWindow.webContents.send("update-state", { type: "error", error: err.message || String(err) });
             }
         }
     });
