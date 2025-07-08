@@ -8,4 +8,7 @@ contextBridge.exposeInMainWorld('electronUpdater', {
   checkForUpdates: () => {
     ipcRenderer.send('check-for-updates');
   },
+  downloadUpdate: () => {
+    ipcRenderer.send('download-update');
+  },
 });

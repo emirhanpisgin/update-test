@@ -71,6 +71,16 @@ app.on("ready", () => {
             }
         }
     });
+    // Listen for manual download trigger from renderer
+    ipcMain.on("download-update", async (event) => {
+        try {
+            await updater.downloadUpdate();
+        } catch (err) {
+            if (mainWindow && mainWindow.webContents) {
+                mainWindow.webContents.send("update-state", { type: "error", error: err.message || String(err) });
+            }
+        }
+    });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

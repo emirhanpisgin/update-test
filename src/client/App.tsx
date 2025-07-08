@@ -13,6 +13,7 @@ declare global {
         electronUpdater: {
             onUpdateState: (cb: (state: UpdateState) => void) => void;
             checkForUpdates: () => void;
+            downloadUpdate: () => void;
         };
     }
 }
@@ -32,6 +33,7 @@ export default function App() {
     };
 
     let status: React.ReactNode = null;
+    let showDownloadButton = false;
     switch (updateState.type) {
         case 'idle':
             status = 'Idle';
@@ -44,6 +46,7 @@ export default function App() {
                     <div>{updateState.info.releaseNotes}</div>
                 </div>
             );
+            showDownloadButton = true;
             break;
         case 'update-not-available':
             status = 'No update available';
@@ -63,6 +66,10 @@ export default function App() {
             break;
     }
 
+    const handleDownload = () => {
+        window.electronUpdater.downloadUpdate();
+    };
+
     return (
         <div className="h-screen w-screen bg-zinc-800 flex flex-col items-center justify-center text-zinc-300">
             <div className="text-4xl mb-8">basic-electron-updater test</div>
@@ -72,6 +79,14 @@ export default function App() {
             >
                 Check for Updates
             </button>
+            {showDownloadButton && (
+                <button
+                    className="mb-4 px-6 py-2 rounded bg-green-600 hover:bg-green-700 text-white text-xl"
+                    onClick={handleDownload}
+                >
+                    Download Update
+                </button>
+            )}
             <div className="text-2xl mt-4">{status}</div>
         </div>
     );
