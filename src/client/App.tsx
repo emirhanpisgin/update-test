@@ -230,7 +230,7 @@ export default function App() {
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold">basic-electron-updater</h1>
-                        <p className="text-gray-400">Test Application v{appVersion} - Enhanced UI ✨</p>
+                        <p className="text-gray-400">Test Application v{appVersion}</p>
                     </div>
                     <div className="flex items-center space-x-4">
                         <label className="flex items-center space-x-2 text-sm">
