@@ -32,19 +32,19 @@ declare global {
 }
 
 const formatTime = (date: Date): string => {
-    return date.toLocaleTimeString('en-US', { 
-        hour12: false, 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit' 
+    return date.toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
     });
 };
 
 const addLog = (
-    logs: LogEntry[], 
-    setLogs: React.Dispatch<React.SetStateAction<LogEntry[]>>, 
-    level: LogEntry['level'], 
-    message: string, 
+    logs: LogEntry[],
+    setLogs: React.Dispatch<React.SetStateAction<LogEntry[]>>,
+    level: LogEntry['level'],
+    message: string,
     details?: any
 ): void => {
     const newLog: LogEntry = {
@@ -74,13 +74,13 @@ export default function App() {
         // Set up update state listener
         window.electronUpdater.onUpdateState((state) => {
             setUpdateState(state);
-            
+
             switch (state.type) {
                 case 'checking':
                     addLog(logs, setLogs, 'info', 'Checking for updates...');
                     break;
                 case 'update-available':
-                    addLog(logs, setLogs, 'success', `Update available: v${state.info.version}`, state.info);
+                    addLog(logs, setLogs, 'success', `Update available: ${state.info.version}`, state.info);
                     break;
                 case 'update-not-available':
                     addLog(logs, setLogs, 'info', 'No updates available');
@@ -193,14 +193,14 @@ export default function App() {
                         <div>Downloading update...</div>
                         {state.progress.percent !== undefined && (
                             <div className="w-64 bg-gray-700 rounded-full h-2">
-                                <div 
+                                <div
                                     className="bg-blue-500 h-2 rounded-full transition-all duration-300"
                                     style={{ width: `${state.progress.percent}%` }}
                                 />
                             </div>
                         )}
                         <div className="text-sm text-gray-400">
-                            {state.progress.transferred && state.progress.total ? 
+                            {state.progress.transferred && state.progress.total ?
                                 `${(state.progress.transferred / 1024 / 1024).toFixed(1)} MB / ${(state.progress.total / 1024 / 1024).toFixed(1)} MB` :
                                 'Preparing download...'
                             }
@@ -229,7 +229,7 @@ export default function App() {
             <div className="bg-gray-800 border-b border-gray-700 p-4">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold">basic-electron-updater</h1>
+                        <h1 className="text-2xl font-bold">basic-electron-updater v1.0.3</h1>
                         <p className="text-gray-400">Test Application v{appVersion} - Enhanced UI</p>
                     </div>
                     <div className="flex items-center space-x-4">
