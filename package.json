@@ -1,7 +1,7 @@
 {
   "name": "update-test",
   "productName": "update-test",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
